@@ -1,0 +1,87 @@
+## MAC OS
+.DS_Store
+
+
+## Windows
+Thumbs.db
+
+
+## EMACS
+*~
+\#*
+.\#*
+
+
+## VIM
+*.swp
+
+
+## Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+
+## IDEA / RUBYMINE
+.idea
+
+
+## Adeptiv
+config
+config.local.xml
+*.local.xml
+
+
+## SVN
+.svn
+_svn
+
+
+## Sass
+compass_app_log.txt
+.sass-cache/
+config.codekit
+
+
+## Ruby / Rails
+.env
+env
+.bundle
+db/*.sqlite3
+log/*.log
+log/parsed*
+tmp/
+config/database.yml
+config/*.sphinx.conf
+.rsync_cache/
+log/searchd.*.pid
+public/system
+config/heroku_env.rb
+*.stamp
+spec/fixtures/vcr_cassettes/*
+
+
+## .NET / Visual Studio
+bin
+Bin
+obj
+Debug
+debug
+Logs
+logs
+generated
+obj
+*.suo
+*.user
+*.orig
+*ReSharper*
+connectionStrings.config
+release
+BuildArtifacts/
+.vs
+
+## Project
+*.cache
+well-known
+
+## Node
+node_modules
