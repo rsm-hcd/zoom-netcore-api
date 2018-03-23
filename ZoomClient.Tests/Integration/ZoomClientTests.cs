@@ -5,6 +5,7 @@ using AndcultureCode.ZoomClient.Models.Users;
 using NUnit.Framework;
 using Shouldly;
 using System;
+using System.Linq;
 
 namespace ZoomClient.Tests.Integration
 {
@@ -24,8 +25,8 @@ namespace ZoomClient.Tests.Integration
         {
             _sut = new AndcultureCode.ZoomClient.ZoomClient(new ZoomClientOptions
             {
-                ZoomApiKey = "eaHeqhjFTSy02e3DDmC6SA",
-                ZoomApiSecret = "XfKzqO44Qtov4yWOkOSs20j061zYYrO9Ff9r"
+                ZoomApiKey = "",
+                ZoomApiSecret = ""
             });
         }
 
@@ -33,6 +34,26 @@ namespace ZoomClient.Tests.Integration
         public void Teardown() { }
 
         #endregion
+
+        [Test]
+        public void Load_User_Meetings_By_Email_Returns_List()
+        {
+            // Arrange
+            string userEmail = null;
+            try
+            {
+                userEmail = _sut.GetUsers().Users.FirstOrDefault().Email;
+            } catch (Exception) { }
+            userEmail.ShouldNotBeNull();
+
+            // Act
+            var result = _sut.GetMeetings(userEmail);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Meetings.ShouldNotBeNull();
+            result.Meetings.Count.ShouldBeGreaterThan(0);
+        }
 
         [Test]
         public void Load_All_Users_Returns_List()

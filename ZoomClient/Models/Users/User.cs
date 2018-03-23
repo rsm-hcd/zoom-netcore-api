@@ -4,7 +4,7 @@ using System;
 
 namespace AndcultureCode.ZoomClient.Models.Users
 {
-    public class User
+    public class User : BaseObject
     {
         [DeserializeAs(Name = "first_name")]
         [SerializeAs(Name = "first_name")]

@@ -1,5 +1,6 @@
 ﻿using AndcultureCode.ZoomClient.Interfaces;
 using AndcultureCode.ZoomClient.Models;
+using AndcultureCode.ZoomClient.Models.Meetings;
 using AndcultureCode.ZoomClient.Models.Users;
 using Jose;
 using RestSharp;
@@ -19,6 +20,7 @@ namespace AndcultureCode.ZoomClient
         const string DELETE_SUBACCOUNT         = "accounts/{accountId}";
 
         const string GET_LIST_ACCOUNTS         = "accounts";
+        const string GET_LIST_MEETINGS         = "users/{userId}/meetings";
         const string GET_LIST_USERS            = "users";
         const string GET_SUBACCOUNT            = "accounts/{accountId}";
         const string GET_SUBACCOUNT_SETTINGS   = "accounts/{accountId}/settings";
@@ -27,7 +29,7 @@ namespace AndcultureCode.ZoomClient
         const string PATCH_SUBACCOUNT_SETTINGS = "accounts/{accountId}/settings";
 
         const string POST_ACCOUNT              = "accounts";
-        const string POST_CREATE_USER = "users";
+        const string POST_CREATE_USER          = "users";
 
         #endregion
 
@@ -68,6 +70,20 @@ namespace AndcultureCode.ZoomClient
         #endregion
 
         #region IZoomClient Implementation
+
+        public ListMeetings GetMeetings(string userId)
+        {
+            var request = BuildRequestAuthorization(GET_LIST_MEETINGS, Method.GET);
+            request.AddParameter("userId", userId, ParameterType.UrlSegment);
+            var response = WebClient.Execute<ListMeetings>(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return response.Data;
+            }
+
+            throw new Exception(response.ErrorMessage);
+        }
 
         public User CreateUser(CreateUser createUser)
         {
