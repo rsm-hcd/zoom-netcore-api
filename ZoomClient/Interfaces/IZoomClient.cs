@@ -24,7 +24,7 @@ namespace AndcultureCode.ZoomClient.Interfaces
         /// Get meeting participants report. https://zoom.github.io/api/#retrieve-meeting-participants-report
         /// </summary>
         /// <returns></returns>
-        MeetingParticipantsReport GetMeetingParticipantsReport(string meetingId, int pageSize = 30, int pageNumber = 1);
+        MeetingParticipantsReport GetMeetingParticipantsReport(string meetingId, int pageSize = 30, string nextPageToken = null);
 
         /// <summary>
         /// List users on your account. https://zoom.github.io/api/#list-users

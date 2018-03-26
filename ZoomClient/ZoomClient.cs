@@ -85,6 +85,7 @@ namespace AndcultureCode.ZoomClient
             request.AddParameter("type", type.ToString().ToLowerInvariant(), ParameterType.QueryString);
             request.AddParameter("page_size", pageSize, ParameterType.QueryString);
             request.AddParameter("page_number", pageNumber, ParameterType.QueryString);
+
             var response = WebClient.Execute<ListMeetings>(request);
 
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -116,7 +117,7 @@ namespace AndcultureCode.ZoomClient
             throw new Exception(response.ErrorMessage);
         }
 
-        public MeetingParticipantsReport GetMeetingParticipantsReport(string meetingId, int pageSize = 30, int pageNumber = 1)
+        public MeetingParticipantsReport GetMeetingParticipantsReport(string meetingId, int pageSize = 30, string nextPageToken = null)
         {
             if (pageSize > 300)
             {
@@ -126,7 +127,11 @@ namespace AndcultureCode.ZoomClient
             var request = BuildRequestAuthorization(GET_MEETING_PARTICIPANTS, Method.GET);
             request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
             request.AddParameter("page_size", pageSize, ParameterType.QueryString);
-            request.AddParameter("page_number", pageNumber, ParameterType.QueryString);
+            if (!string.IsNullOrWhiteSpace(nextPageToken))
+            {
+                request.AddParameter("next_page_token", nextPageToken, ParameterType.QueryString);
+            }
+
             var response = WebClient.Execute<MeetingParticipantsReport>(request);
 
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -148,6 +153,7 @@ namespace AndcultureCode.ZoomClient
             request.AddParameter("status", status.ToString().ToLowerInvariant(), ParameterType.QueryString);
             request.AddParameter("page_size", pageSize, ParameterType.QueryString);
             request.AddParameter("page_number", pageNumber, ParameterType.QueryString);
+
             var response = WebClient.Execute<ListUsers>(request);
 
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
