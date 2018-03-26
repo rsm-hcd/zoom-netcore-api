@@ -11,4 +11,13 @@
     <PackageReference Include="RestSharp" Version="106.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Groups\" />
+    <Folder Include="Models\Dashboards\" />
+    <Folder Include="Models\Billing\" />
+    <Folder Include="Models\Webhooks\" />
+    <Folder Include="Models\Recordings\" />
+    <Folder Include="Models\Webinars\" />
+  </ItemGroup>
+
 </Project>

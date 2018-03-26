@@ -1,11 +1,12 @@
-﻿using RestSharp.Deserializers;
+﻿using AndcultureCode.ZoomClient.Interfaces;
+using RestSharp.Deserializers;
 using RestSharp.Serializers;
 using System;
 using System.Collections.Generic;
 
 namespace AndcultureCode.ZoomClient.Models.Users
 {
-    public class CreateUser : BaseCreate
+    public class CreateUser : ICreatable
     {
         /// <summary>
         /// Zoom property: action
@@ -49,7 +50,9 @@ namespace AndcultureCode.ZoomClient.Models.Users
         [SerializeAs(Name = "password")]
         public string Password { get; set; }
 
-        public override List<string> Validate()
+        #region ICreatable Implementation
+
+        public List<string> Validate()
         {
             var results = new List<string>();
             if (string.IsNullOrWhiteSpace(Action))
@@ -81,5 +84,7 @@ namespace AndcultureCode.ZoomClient.Models.Users
 
             return results;
         }
+
+        #endregion
     }
 }

@@ -7,6 +7,13 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
     public class Meeting : BaseObject
     {
         /// <summary>
+        /// Zoom Property: uuid
+        /// </summary>
+        [DeserializeAs(Name = "uuid")]
+        [SerializeAs(Name = "uuid")]
+        public string Uuid { get; set; }
+
+        /// <summary>
         /// Zoom Property: topic
         /// </summary>
         [DeserializeAs(Name = "topic")]
@@ -60,7 +67,7 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
         /// </summary>
         [DeserializeAs(Name = "recurrence")]
         [SerializeAs(Name = "recurrence")]
-        public MeetingRecurrence Recurrence{ get; set; }
+        public MeetingRecurrence Recurrence { get; set; }
 
         /// <summary>
         /// Zoom Property: settings

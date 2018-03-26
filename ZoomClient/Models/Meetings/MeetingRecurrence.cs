@@ -55,7 +55,7 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
         /// </summary>
         [DeserializeAs(Name = "end_times")]
         [SerializeAs(Name = "end_times")]
-        public int EndTimes{ get; set; }
+        public int EndTimes { get; set; }
 
         /// <summary>
         /// Zoom property: end_date_time
@@ -77,28 +77,6 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
             {
                 WeeklyDaysList = string.Join(",", value);
             }
-        }
-
-        public List<string> Validate()
-        {
-            var results = new List<string>();
-            if (RepeatInterval > 0)
-            {
-                if (Type == MeetingRecurrenceTypes.Daily && RepeatInterval > 90)
-                {
-                    results.Add($"{nameof(RepeatInterval)} cannot exceed {90} when Type = {Type}");
-                }
-                if (Type == MeetingRecurrenceTypes.Weekly && RepeatInterval > 12)
-                {
-                    results.Add($"{nameof(RepeatInterval)} cannot exceed {12} when Type = {Type}");
-                }
-                if (Type == MeetingRecurrenceTypes.Monthly && RepeatInterval > 3)
-                {
-                    results.Add($"{nameof(RepeatInterval)} cannot exceed {3} when Type = {Type}");
-                }
-            }
-
-            return results;
         }
     }
 }

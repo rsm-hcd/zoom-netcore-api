@@ -1,6 +1,7 @@
 ﻿using AndcultureCode.ZoomClient;
 using AndcultureCode.ZoomClient.Interfaces;
 using AndcultureCode.ZoomClient.Models;
+using AndcultureCode.ZoomClient.Models.Meetings;
 using AndcultureCode.ZoomClient.Models.Users;
 using NUnit.Framework;
 using Shouldly;
@@ -47,7 +48,7 @@ namespace ZoomClient.Tests.Integration
             userEmail.ShouldNotBeNull();
 
             // Act
-            var result = _sut.GetMeetings(userEmail);
+            var result = _sut.GetMeetings(userEmail, MeetingListTypes.Scheduled);
 
             // Assert
             result.ShouldNotBeNull();
@@ -93,6 +94,21 @@ namespace ZoomClient.Tests.Integration
             // Assert
             result.ShouldBeNull();
             exception.ShouldNotBeNull();
+        }
+
+        [Test]
+        public void Get_User_Participant_Report_For_Last_Meeting()
+        {
+            // Arrange
+            string meetingId = "817473809";
+
+            // Act
+            var result = _sut.GetMeetingParticipantsReport(meetingId);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Participants.ShouldNotBeNull();
+            result.Participants.Count.ShouldBeGreaterThan(0);
         }
     }
 }
