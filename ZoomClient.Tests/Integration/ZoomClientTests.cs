@@ -8,7 +8,7 @@ using Shouldly;
 using System;
 using System.Linq;
 
-namespace ZoomClient.Tests.Integration
+namespace AndcultureCode.ZoomClient.Tests.Integration
 {
     [TestFixture]
     public class ZoomClientTests
@@ -24,7 +24,7 @@ namespace ZoomClient.Tests.Integration
         [SetUp]
         public void Setup()
         {
-            _sut = new AndcultureCode.ZoomClient.ZoomClient(new ZoomClientOptions
+            _sut = new ZoomClient(new ZoomClientOptions
             {
                 ZoomApiKey = "",
                 ZoomApiSecret = ""
@@ -36,6 +36,9 @@ namespace ZoomClient.Tests.Integration
 
         #endregion
 
+
+        #region User Tests
+
         [Test]
         public void Load_User_Meetings_By_Email_Returns_List()
         {
@@ -43,14 +46,14 @@ namespace ZoomClient.Tests.Integration
             string userEmail = null;
             try
             {
-                userEmail = _sut.GetUsers().Users.FirstOrDefault().Email;
+                userEmail = _sut.Users.GetUsers().Users.FirstOrDefault().Email;
             } catch (Exception) { }
             userEmail.ShouldNotBeNull();
 
             // Act
-            var result = _sut.GetMeetings(userEmail, MeetingListTypes.Scheduled);
+            var result = _sut.Meetings.GetMeetings(userEmail, MeetingListTypes.Scheduled);
 
-            // Assert
+            //// Assert
             result.ShouldNotBeNull();
             result.Meetings.ShouldNotBeNull();
             result.Meetings.Count.ShouldBeGreaterThan(0);
@@ -63,7 +66,7 @@ namespace ZoomClient.Tests.Integration
 
 
             // Act
-            var result = _sut.GetUsers();
+            var result = _sut.Users.GetUsers();
 
             // Assert
             result.ShouldNotBeNull();
@@ -72,12 +75,13 @@ namespace ZoomClient.Tests.Integration
         }
 
         [Test]
-        public void Create_User_No_Action_Returns_Error()
+        public void Create_User_Invalid_Action_Returns_Error()
         {
             // Arrange
             var user = new CreateUser
             {
-                Email = "test123@gmail.com"
+                Email = "test123@gmail.com",
+                Type = UserTypes.Basic
             };
 
             // Act
@@ -85,7 +89,7 @@ namespace ZoomClient.Tests.Integration
             User result = null;
             try
             {
-                result = _sut.CreateUser(user);
+                result = _sut.Users.CreateUser(user, "badAction");
             } catch (Exception ex)
             {
                 exception = ex;
@@ -97,18 +101,53 @@ namespace ZoomClient.Tests.Integration
         }
 
         [Test]
+        public void Create_User_Returns_Valid_User()
+        {
+            /**
+             * Developer Note: This method should only work IF you have SSOCreate feature enabled on your zoom account
+             * If you are confident it is enabled you can remove the return below and test.
+             */
+            return;
+
+            // Arrange
+            var email = $"testuser_{DateTimeOffset.Now.ToUnixTimeSeconds()}@gmail.com";
+            var user = new CreateUser
+            {
+                Email = email,
+                Type = UserTypes.Basic
+            };
+
+            // Act
+            var result = _sut.Users.CreateUser(user, CreateUserAction.SsoCreate);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Email.ShouldBe(email);
+            result.Id.ShouldNotBeNull();
+
+            // Cleanup
+            _sut.Users.DeleteUser(result.Id, DeleteUserAction.Delete);
+        }
+
+        #endregion
+
+        #region Report Tests
+
+        [Test]
         public void Get_User_Participant_Report_For_Last_Meeting()
         {
             // Arrange
             string meetingId = "817473809";
 
             // Act
-            var result = _sut.GetMeetingParticipantsReport(meetingId);
+            var result = _sut.Reports.GetMeetingParticipantsReport(meetingId);
 
             // Assert
             result.ShouldNotBeNull();
             result.Participants.ShouldNotBeNull();
             result.Participants.Count.ShouldBeGreaterThan(0);
         }
+
+        #endregion
     }
 }

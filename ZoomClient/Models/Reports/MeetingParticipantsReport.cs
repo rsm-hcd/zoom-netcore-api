@@ -1,6 +1,4 @@
-﻿using RestSharp.Deserializers;
-using RestSharp.Serializers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace AndcultureCode.ZoomClient.Models.Reports
 {
@@ -9,8 +7,6 @@ namespace AndcultureCode.ZoomClient.Models.Reports
         /// <summary>
         /// Zoom Property: participants
         /// </summary>
-        [DeserializeAs(Name = "participants")]
-        [SerializeAs(Name = "participants")]
         public List<MeetingParticipant> Participants { get; set; }
     }
 }
