@@ -5,16 +5,16 @@
         /// <summary>
         /// Meetings Client
         /// </summary>
-        ZoomMeetingsClient Meetings { get; }
+        IZoomMeetingsClient Meetings { get; }
 
         /// <summary>
         /// Reports Client
         /// </summary>
-        ZoomReportsClient Reports { get; }
+        IZoomReportsClient Reports { get; }
 
         /// <summary>
         /// Users Client
         /// </summary>
-        ZoomUsersClient Users { get; }
+        IZoomUsersClient Users { get; }
     }
 }

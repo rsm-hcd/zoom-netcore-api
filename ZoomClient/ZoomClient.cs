@@ -18,9 +18,9 @@ namespace AndcultureCode.ZoomClient
         ZoomClientOptions Options   { get; set; }
         RestClient        WebClient { get; set; }
 
-        public ZoomMeetingsClient Meetings { get; set; }
-        public ZoomReportsClient  Reports { get; set; }
-        public ZoomUsersClient    Users { get; set; }
+        public IZoomMeetingsClient Meetings { get; set; }
+        public IZoomReportsClient  Reports { get; set; }
+        public IZoomUsersClient    Users { get; set; }
 
         #endregion
 
