@@ -36,7 +36,7 @@ namespace AndcultureCode.ZoomClient.Interfaces
         /// <param name="meetingId"></param>
         /// <param name="meeting"></param>
         /// <returns></returns>
-        Meeting UpdateMeeting(string meetingId, Meeting meeting);
+        bool UpdateMeeting(string meetingId, Meeting meeting);
 
         /// <summary>
         /// Delete a meeting. https://zoom.github.io/api/#delete-a-meeting

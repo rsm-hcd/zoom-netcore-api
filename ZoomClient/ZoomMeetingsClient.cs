@@ -79,7 +79,7 @@ namespace AndcultureCode.ZoomClient
 
             var response = WebClient.Execute<Meeting>(request);
 
-            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 return response.Data;
             }
@@ -102,17 +102,17 @@ namespace AndcultureCode.ZoomClient
             throw new Exception(response.ErrorMessage);
         }
 
-        public Meeting UpdateMeeting(string meetingId, Meeting meeting)
+        public bool UpdateMeeting(string meetingId, Meeting meeting)
         {
             var request = BuildRequestAuthorization(PATCH_MEETING, Method.PATCH);
             request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
 
-            var response = WebClient.Execute<Meeting>(request);
+            var response = WebClient.Execute(request);
             request.AddJsonBody(meeting);
 
-            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
-                return response.Data;
+                return true;
             }
 
             throw new Exception(response.ErrorMessage);
@@ -199,7 +199,7 @@ namespace AndcultureCode.ZoomClient
 
             var response = WebClient.Execute<MeetingRegistrant>(request);
 
-            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.Created)
             {
                 return response.Data;
             }
