@@ -68,7 +68,17 @@ namespace AndcultureCode.ZoomClient
                 return response.Data;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
 
         public Meeting CreateMeeting(string userId, Meeting meeting)
@@ -84,7 +94,17 @@ namespace AndcultureCode.ZoomClient
                 return response.Data;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
 
         public Meeting GetMeeting(string meetingId)
@@ -99,7 +119,17 @@ namespace AndcultureCode.ZoomClient
                 return response.Data;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
 
         public bool UpdateMeeting(string meetingId, Meeting meeting)
@@ -115,7 +145,17 @@ namespace AndcultureCode.ZoomClient
                 return true;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
         }
 
         public bool DeleteMeeting(string meetingId, string occurrenceId = null)
@@ -124,7 +164,7 @@ namespace AndcultureCode.ZoomClient
             request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
             if (!string.IsNullOrWhiteSpace(occurrenceId))
             {
-                request.AddParameter("occurrence_id", meetingId, ParameterType.QueryString);
+                request.AddParameter("occurrence_id", occurrenceId, ParameterType.QueryString);
             }
 
             var response = WebClient.Execute(request);
@@ -134,7 +174,17 @@ namespace AndcultureCode.ZoomClient
                 return true;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
         }
 
         public bool EndMeeting(string meetingId)
@@ -150,7 +200,17 @@ namespace AndcultureCode.ZoomClient
                 return true;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
         }
 
         public ListMeetingRegistrants GetMeetingRegistrants(string meetingId, string status = "approved", string occurrenceId = null, int pageSize = 30, int pageNumber = 1)
@@ -184,7 +244,17 @@ namespace AndcultureCode.ZoomClient
                 return response.Data;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
 
         public MeetingRegistrant CreateMeetingRegistrant(string meetingId, CreateMeetingRegistrant meetingRegistrant, string occurrenceIds = null)
@@ -204,7 +274,17 @@ namespace AndcultureCode.ZoomClient
                 return response.Data;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
 
         public bool UpdateMeetingRegistrant(string meetingId, List<MeetingRegistrantUpdate> registrants, string status, string occurrenceId = null)
@@ -231,7 +311,17 @@ namespace AndcultureCode.ZoomClient
                 return true;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
         }
 
         #endregion

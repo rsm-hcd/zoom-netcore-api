@@ -55,7 +55,11 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
         {
             get
             {
-                return WeeklyDaysList.Split(',').Select(e => (MeetingRecurrenceWeekDays)Enum.Parse(typeof(MeetingRecurrenceWeekDays), e)).ToList();
+                if (string.IsNullOrWhiteSpace(WeeklyDaysList))
+                {
+                    return null;
+                }
+                return WeeklyDaysList.Split(',').Select(e => (MeetingRecurrenceWeekDays)Enum.Parse(typeof(MeetingRecurrenceWeekDays), e))?.ToList();
             }
             set
             {

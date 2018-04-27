@@ -19,11 +19,11 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
                     {
                         results.Add($"{nameof(Recurrence.RepeatInterval)} cannot exceed {90} when Type = {Type}");
                     }
-                    if (Recurrence.Type == MeetingRecurrenceTypes.Weekly && Recurrence.RepeatInterval > 12)
+                    else if (Recurrence.Type == MeetingRecurrenceTypes.Weekly && Recurrence.RepeatInterval > 12)
                     {
                         results.Add($"{nameof(Recurrence.RepeatInterval)} cannot exceed {12} when Type = {Type}");
                     }
-                    if (Recurrence.Type == MeetingRecurrenceTypes.Monthly && Recurrence.RepeatInterval > 3)
+                    else if (Recurrence.Type == MeetingRecurrenceTypes.Monthly && Recurrence.RepeatInterval > 3)
                     {
                         results.Add($"{nameof(Recurrence.RepeatInterval)} cannot exceed {3} when Type = {Type}");
                     }

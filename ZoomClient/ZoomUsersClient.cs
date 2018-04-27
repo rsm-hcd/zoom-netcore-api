@@ -57,7 +57,17 @@ namespace AndcultureCode.ZoomClient
                 return response.Data;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
         public User CreateUser(CreateUser createUser, string action)
         {
@@ -90,7 +100,17 @@ namespace AndcultureCode.ZoomClient
                 return response.Data;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
 
         public bool DeleteUser(string userId, string action = "disassociate")
@@ -111,7 +131,17 @@ namespace AndcultureCode.ZoomClient
                 return true;
             }
 
-            throw new Exception(response.ErrorMessage);
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
         }
 
         #endregion
