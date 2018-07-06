@@ -36,6 +36,46 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
 
         #endregion
 
+        #region Meeting Tests
+
+        [Test]
+        public void Create_Meeting_Returns_Meeting()
+        {
+            // Arrange
+            string userEmail = null;
+            try
+            {
+                userEmail = _sut.Users.GetUsers().Users.FirstOrDefault().Email;
+            }
+            catch (Exception) { }
+            userEmail.ShouldNotBeNull();
+            var meeting = new Meeting
+            {
+                Topic = "Test Meeting",
+                Type = MeetingTypes.Scheduled,
+                StartTime = DateTimeOffset.Now,
+                Duration = 60,
+                Settings = new MeetingSettings
+                {
+                    EnableHostVideo = true,
+                    EnableParticipantVideo = true,
+                    EnableJoinBeforeHost = false,
+                    ApprovalType = MeetingApprovalTypes.Automatic,
+                    AutoRecording = MeetingAutoRecordingOptions.Cloud,
+                    EnableEnforceLogin = true
+                }
+            };
+
+            // Act
+            var result = _sut.Meetings.CreateMeeting(userEmail, meeting);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Uuid.ShouldNotBeNullOrWhiteSpace();
+        }
+
+        #endregion
+
 
         #region User Tests
 

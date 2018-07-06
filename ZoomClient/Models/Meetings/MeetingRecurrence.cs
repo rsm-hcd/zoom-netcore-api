@@ -51,6 +51,7 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
         /// <summary>
         /// Zoom property: weekly_days
         /// </summary>
+        [JsonIgnore]
         public List<MeetingRecurrenceWeekDays> WeeklyDays
         {
             get
@@ -63,7 +64,7 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
             }
             set
             {
-                WeeklyDaysList = string.Join(",", value);
+                WeeklyDaysList = string.Join(",", value.ToString());
             }
         }
     }
