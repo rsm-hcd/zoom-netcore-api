@@ -142,13 +142,13 @@ namespace AndcultureCode.ZoomClient
             return null;
         }
 
-        public bool UpdateUser(string userId, User user)
+        public bool UpdateUser(string userId, UpdateUser user)
         {
             var request = BuildRequestAuthorization(PATCH_USER, Method.PATCH);
             request.AddParameter("userId", userId, ParameterType.UrlSegment);
+            request.AddJsonBody(user);
 
             var response = WebClient.Execute(request);
-            request.AddJsonBody(user);
 
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.NoContent)
             {

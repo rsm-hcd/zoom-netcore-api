@@ -198,6 +198,38 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             result.Id.ShouldNotBeNull();
         }
 
+        [Test]
+        public void Update_User_Returns_Valid_User()
+        {
+            // Arrange
+            GetUser();
+            var user = _sut.Users.GetUser(_userEmail);
+            var originalLastName = user.LastName;
+            var newLastName = $"Last Name {DateTimeOffset.Now.ToUnixTimeMilliseconds()}";
+            var updateUser = new UpdateUser
+            {
+                FirstName = user.FirstName,
+                LastName = newLastName
+            };
+
+            // Act
+            var result = _sut.Users.UpdateUser(_userEmail, updateUser);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.ShouldBe(true);
+            user = _sut.Users.GetUser(_userEmail);
+            user.Email.ShouldBe(_userEmail);
+            user.LastName.ShouldBe(newLastName);
+
+            // Cleanup
+            _sut.Users.UpdateUser(_userEmail, new UpdateUser
+            {
+                FirstName = user.FirstName,
+                LastName = originalLastName
+            });
+        }
+
         #endregion
 
         #region Report Tests

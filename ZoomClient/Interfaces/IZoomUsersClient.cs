@@ -28,7 +28,7 @@ namespace AndcultureCode.ZoomClient.Interfaces
         /// Update a user on your account. https://zoom.github.io/api/#update-a-user
         /// </summary>
         /// <returns></returns>
-        bool UpdateUser(string userId, User user);
+        bool UpdateUser(string userId, UpdateUser user);
 
         /// <summary>
         /// Check if the user email exists. https://zoom.github.io/api/#check-a-users-email

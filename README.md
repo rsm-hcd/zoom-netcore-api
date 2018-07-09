@@ -52,4 +52,7 @@ foreach (var user in allUsers.Users) {
 
 * `ListUsers GetUsers(UserStatuses status = UserStatuses.Active, int pageSize = 30, int pageNumber = 1)` - List users on your account. https://zoom.github.io/api/#list-users
 * `User CreateUser(CreateUser createUser, string action)` - Create a new user on your account. https://zoom.github.io/api/#create-a-user
+* `User GetUser(string userId, LoginTypes? loginType = null)` - Retrieve a user on your account. https://zoom.github.io/api/#retrieve-a-user
+* `bool UpdateUser(string userId, UpdateUser user)` - Update a user on your account. https://zoom.github.io/api/#update-a-user
+* `bool CheckUser(string email)` - Check if the user email exists. https://zoom.github.io/api/#check-a-users-email
 * `bool DeleteUser(string userId, string action = "disassociate")` - Delete a user on your account. https://zoom.github.io/api/#delete-a-user
