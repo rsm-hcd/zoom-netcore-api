@@ -99,6 +99,23 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             result.JoinUrl.ShouldNotBeNullOrWhiteSpace();
         }
 
+        [Test]
+        public void Update_Meeting_Returns_Success()
+        {
+            // Arrange
+            GetUser();
+            GenerateMeeting();
+            _meeting = _sut.Meetings.CreateMeeting(_userEmail, _meeting);
+            _meeting.Topic = "Another Test Topic";
+
+            // Act
+            var result = _sut.Meetings.UpdateMeeting(_meeting.Id, _meeting);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.ShouldBe(true);
+        }
+
         #endregion
 
 
