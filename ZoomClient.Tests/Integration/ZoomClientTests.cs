@@ -28,8 +28,8 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         {
             _sut = new ZoomClient(new ZoomClientOptions
             {
-                ZoomApiKey = "",
-                ZoomApiSecret = ""
+                ZoomApiKey = "eaHeqhjFTSy02e3DDmC6SA",
+                ZoomApiSecret = "ouRovTuGj1d29dUXIrWvkD3be6vQrVJj7xLp"
             });
         }
 
@@ -96,6 +96,7 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             // Assert
             result.ShouldNotBeNull();
             result.Uuid.ShouldNotBeNullOrWhiteSpace();
+            result.JoinUrl.ShouldNotBeNullOrWhiteSpace();
         }
 
         #endregion

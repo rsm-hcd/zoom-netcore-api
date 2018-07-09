@@ -41,7 +41,18 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
 
         /// <summary>
         /// Zoom Property: agenda
+        /// </summary>
         public string Agenda { get; set; }
+
+        /// <summary>
+        /// Zoom Property: start_url
+        /// </summary>
+        public string StartUrl { get; set; }
+
+        /// <summary>
+        /// Zoom Property: join_url
+        /// </summary>
+        public string JoinUrl { get; set; }
 
         /// <summary>
         /// Zoom Property: recurrence
