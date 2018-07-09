@@ -136,9 +136,9 @@ namespace AndcultureCode.ZoomClient
         {
             var request = BuildRequestAuthorization(PATCH_MEETING, Method.PATCH);
             request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
+            request.AddJsonBody(meeting);
 
             var response = WebClient.Execute(request);
-            request.AddJsonBody(meeting);
 
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.NoContent)
             {

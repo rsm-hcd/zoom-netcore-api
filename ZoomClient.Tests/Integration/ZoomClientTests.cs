@@ -28,8 +28,8 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         {
             _sut = new ZoomClient(new ZoomClientOptions
             {
-                ZoomApiKey = "eaHeqhjFTSy02e3DDmC6SA",
-                ZoomApiSecret = "ouRovTuGj1d29dUXIrWvkD3be6vQrVJj7xLp"
+                ZoomApiKey = "",
+                ZoomApiSecret = ""
             });
         }
 
