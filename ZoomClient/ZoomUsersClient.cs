@@ -14,6 +14,10 @@ namespace AndcultureCode.ZoomClient
         const string DELETE_USER = "users/{userId}";
 
         const string GET_LIST_USERS = "users";
+        const string GET_USER       = "users/{userId}";
+        const string GET_USER_EMAIL = "users/email";
+
+        const string PATCH_USER = "users/{userId}";
 
         const string POST_CREATE_USER = "users";
 
@@ -111,6 +115,82 @@ namespace AndcultureCode.ZoomClient
             }
 
             return null;
+        }
+
+        public User GetUser(string userId, LoginTypes? loginType)
+        {
+            var request = BuildRequestAuthorization(GET_USER, Method.GET);
+            request.AddParameter("userId", userId, ParameterType.UrlSegment);
+
+            var response = WebClient.Execute<User>(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return response.Data;
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
+        }
+
+        public bool UpdateUser(string userId, User user)
+        {
+            var request = BuildRequestAuthorization(PATCH_USER, Method.PATCH);
+            request.AddParameter("userId", userId, ParameterType.UrlSegment);
+
+            var response = WebClient.Execute(request);
+            request.AddJsonBody(user);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                return true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
+        }
+
+        public bool CheckUser(string email)
+        {
+            var request = BuildRequestAuthorization(GET_USER_EMAIL, Method.GET);
+            request.AddParameter("email", email, ParameterType.QueryString);
+
+            var response = WebClient.Execute<CheckUserEmail>(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return response.Data.EmailExists;
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
         }
 
         public bool DeleteUser(string userId, string action = "disassociate")

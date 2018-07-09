@@ -1,7 +1,4 @@
-﻿using AndcultureCode.ZoomClient.Models.Meetings;
-using AndcultureCode.ZoomClient.Models.Reports;
-using AndcultureCode.ZoomClient.Models.Users;
-using System.Collections.Generic;
+﻿using AndcultureCode.ZoomClient.Models.Users;
 
 namespace AndcultureCode.ZoomClient.Interfaces
 {
@@ -20,6 +17,24 @@ namespace AndcultureCode.ZoomClient.Interfaces
         /// <param name="action"></param>
         /// <returns></returns>
         User CreateUser(CreateUser createUser, string action);
+
+        /// <summary>
+        /// Retrieve a user on your account. https://zoom.github.io/api/#retrieve-a-user
+        /// </summary>
+        /// <returns></returns>
+        User GetUser(string userId, LoginTypes? loginType = null);
+
+        /// <summary>
+        /// Update a user on your account. https://zoom.github.io/api/#update-a-user
+        /// </summary>
+        /// <returns></returns>
+        bool UpdateUser(string userId, User user);
+
+        /// <summary>
+        /// Check if the user email exists. https://zoom.github.io/api/#check-a-users-email
+        /// </summary>
+        /// <returns></returns>
+        bool CheckUser(string email);
 
         /// <summary>
         /// Delete a user on your account. https://zoom.github.io/api/#delete-a-user
