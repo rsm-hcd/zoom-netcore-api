@@ -56,3 +56,11 @@ foreach (var user in allUsers.Users) {
 * `bool UpdateUser(string userId, UpdateUser user)` - Update a user on your account. https://zoom.github.io/api/#update-a-user
 * `bool CheckUser(string email)` - Check if the user email exists. https://zoom.github.io/api/#check-a-users-email
 * `bool DeleteUser(string userId, string action = "disassociate")` - Delete a user on your account. https://zoom.github.io/api/#delete-a-user
+
+### IZoomWebhooksClient
+
+* `ListWebhooks GetWebhooks()` - List webhooks for an account. https://zoom.github.io/api/#list-webhooks
+* `Webhook CreateWebhook(CreateWebhook createWebhook)` - Create a webhook for an account. https://zoom.github.io/api/#create-a-webhook
+* `Webhook GetWebhook(string webhookId)` - Retrieve a webhook. https://zoom.github.io/api/#retrieve-a-webhook
+* `bool UpdateWebhook(string webhookId, UpdateWebhook webhook)` - Update a webhook. https://zoom.github.io/api/#update-a-webhook
+* `bool DeleteWebhook(string webhookId)` - Delete a webhook. https://zoom.github.io/api/#delete-a-webhook

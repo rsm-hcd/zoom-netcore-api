@@ -16,5 +16,10 @@
         /// Users Client
         /// </summary>
         IZoomUsersClient Users { get; }
+
+        /// <summary>
+        /// Webhooks Client
+        /// </summary>
+        IZoomWebhookClient Webhooks { get; }
     }
 }

@@ -19,8 +19,9 @@ namespace AndcultureCode.ZoomClient
         RestClient        WebClient { get; set; }
 
         public IZoomMeetingsClient Meetings { get; set; }
-        public IZoomReportsClient  Reports { get; set; }
-        public IZoomUsersClient    Users { get; set; }
+        public IZoomReportsClient  Reports  { get; set; }
+        public IZoomUsersClient    Users    { get; set; }
+        public IZoomWebhookClient  Webhooks { get; set; }
 
         #endregion
 
@@ -54,6 +55,7 @@ namespace AndcultureCode.ZoomClient
             Meetings = new ZoomMeetingsClient(Options, WebClient);
             Reports = new ZoomReportsClient(Options, WebClient);
             Users = new ZoomUsersClient(Options, WebClient);
+            Webhooks = new ZoomWebhookClient(Options, WebClient);
         }
 
         #endregion

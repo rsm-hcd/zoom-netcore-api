@@ -1,11 +1,12 @@
-﻿using AndcultureCode.ZoomClient;
-using AndcultureCode.ZoomClient.Interfaces;
+﻿using AndcultureCode.ZoomClient.Interfaces;
 using AndcultureCode.ZoomClient.Models;
 using AndcultureCode.ZoomClient.Models.Meetings;
 using AndcultureCode.ZoomClient.Models.Users;
+using AndcultureCode.ZoomClient.Models.Webhooks;
 using NUnit.Framework;
 using Shouldly;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AndcultureCode.ZoomClient.Tests.Integration
@@ -18,6 +19,7 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         IZoomClient _sut;
         Meeting     _meeting;
         string      _userEmail;
+        Webhook     _webhook;
 
         #endregion
 
@@ -40,6 +42,12 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             {
                 _sut.Meetings.DeleteMeeting(_meeting.Id);
                 _meeting = null;
+            }
+
+            if (_webhook != null && !string.IsNullOrWhiteSpace(_webhook.WebhookId))
+            {
+                _sut.Webhooks.DeleteWebhook(_webhook.WebhookId);
+                _webhook = null;
             }
         }
 
@@ -269,7 +277,102 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
 
         #endregion
 
+        #region Webhook Tests
+
+        [Test]
+        public void List_Webhooks_Returns_List()
+        {
+            // Arrange
+            CreateWebhook();
+            _webhook.WebhookId.ShouldNotBeNullOrWhiteSpace();
+
+            // Act
+            var result = _sut.Webhooks.GetWebhooks();
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.TotalRecords.ShouldBeGreaterThan(0);
+            result.Webhooks.Select(e => e.WebhookId).ShouldContain(_webhook.WebhookId);
+        }
+
+        [Test]
+        public void Create_Webhooks_Returns_Webhook()
+        {
+            // Arrange
+
+            // Act
+            CreateWebhook();
+
+            // Assert
+            _webhook.ShouldNotBeNull();
+            _webhook.WebhookId.ShouldNotBeNullOrWhiteSpace();
+        }
+
+        [Test]
+        public void Delete_Webhooks_Returns_Success()
+        {
+            // Arrange
+            CreateWebhook();
+            _webhook.WebhookId.ShouldNotBeNullOrWhiteSpace();
+
+            // Act
+            var result = _sut.Webhooks.DeleteWebhook(_webhook.WebhookId);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.ShouldBe(true);
+
+            // Cleanup
+            _webhook = null;
+        }
+
+        [Test]
+        public void Update_Webhooks_Returns_Success()
+        {
+            // Arrange
+            CreateWebhook();
+            _webhook.WebhookId.ShouldNotBeNullOrWhiteSpace();
+            var update = new UpdateWebhook
+            {
+                Url = "https://anotherurl.com",
+                AuthUser = "testUser2",
+                AuthPassword = "password2",
+                Events = new List<string>
+                {
+                    WebhookEvents.MeetingEnded, WebhookEvents.RecordingCompleted, WebhookEvents.RecordingTranscriptCompleted
+                }
+            };
+
+            // Act
+            var result = _sut.Webhooks.UpdateWebhook(_webhook.WebhookId, update);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.ShouldBe(true);
+            var webhook = _sut.Webhooks.GetWebhook(_webhook.WebhookId);
+            webhook.WebhookId.ShouldNotBeNullOrWhiteSpace();
+            webhook.Url.ShouldBe(update.Url);
+            webhook.AuthUser.ShouldBe(update.AuthUser);
+            webhook.AuthPassword.ShouldBe(update.AuthPassword);
+        }
+
+        #endregion
+
         #region Private Methods
+
+        void CreateWebhook()
+        {
+            _webhook = _sut.Webhooks.CreateWebhook(new CreateWebhook
+            {
+                Url = "https://google.com",
+                AuthUser = "testUser",
+                AuthPassword = "password",
+                Events = new List<string>
+                {
+                    WebhookEvents.MeetingEnded, WebhookEvents.RecordingCompleted, WebhookEvents.RecordingTranscriptCompleted
+                }
+            });
+        }
 
         void GetUser()
         {
