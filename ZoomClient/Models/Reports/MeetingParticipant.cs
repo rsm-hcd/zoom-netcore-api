@@ -13,8 +13,7 @@ namespace AndcultureCode.ZoomClient.Models.Reports
         /// <summary>
         /// Zoom Property: user_email
         /// </summary>
-        [JsonProperty("user_email")]
-        public string Email { get; set; }
+        public string UserEmail { get; set; }
 
         /// <summary>
         /// Zoom Property: join_time
