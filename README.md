@@ -28,9 +28,22 @@ foreach (var user in allUsers.Users) {
 
 ### IZoomClient
 
+* `IZoomGroupsClient Groups` - Zoom Groups Client
 * `IZoomMeetingsClient Meetings` - Zoom Meetings Client
 * `IZoomReportsClient Reports` - Zoom Reports Client
 * `IZoomUsersClient Users` - Zoom Users Client
+* `IZoomWebhooksClient Webhooks` - Zoom Webhooks Client
+
+### IZoomGroupsClient
+
+* `ListGroups GetUsers()` - List groups under your account. https://zoom.github.io/api/#list-groups
+* `Group CreateGroup(CreateGroup createGroup)` - Create a group under your account. https://zoom.github.io/api/#create-a-group
+* `Group GetGroup(string groupId)` - Retrieve a group under your account. https://zoom.github.io/api/#retrieve-a-group
+* `bool UpdateGroup(string groupId, UpdateGroup group)` - Update a group under your account. https://zoom.github.io/api/#update-a-group
+* `bool DeleteGroup(string groupId)` - Delete a group under your account. https://zoom.github.io/api/#delete-a-group
+* `ListMembers GetGroupMembers(string groupId, int pageSize = 30, int pageNumber = 1)` - List a group’s members under your account. https://zoom.github.io/api/#list-a-groups-members
+* `bool AddGroupMembers(string groupId, List<CreateMember> createMembers)` - Add members to a group under your account. https://zoom.github.io/api/#add-group-members
+* `bool DeleteGroupMembers(string groupId, string memberId)` - Delete a member from a group under your account. https://zoom.github.io/api/#delete-a-group-member
 
 ### IZoomMeetingsClient
 

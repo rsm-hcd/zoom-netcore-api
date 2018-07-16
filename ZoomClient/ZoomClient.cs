@@ -15,13 +15,14 @@ namespace AndcultureCode.ZoomClient
 
         #region Properties
 
-        ZoomClientOptions Options   { get; set; }
-        RestClient        WebClient { get; set; }
+        ZoomClientOptions Options   { get; }
+        RestClient        WebClient { get; }
 
-        public IZoomMeetingsClient Meetings { get; set; }
-        public IZoomReportsClient  Reports  { get; set; }
-        public IZoomUsersClient    Users    { get; set; }
-        public IZoomWebhookClient  Webhooks { get; set; }
+        public IZoomGroupsClient   Groups   { get; }
+        public IZoomMeetingsClient Meetings { get; }
+        public IZoomReportsClient  Reports  { get; }
+        public IZoomUsersClient    Users    { get; }
+        public IZoomWebhookClient  Webhooks { get; }
 
         #endregion
 
@@ -52,9 +53,10 @@ namespace AndcultureCode.ZoomClient
 
             WebClient = new RestClient(options.ZoomApiBaseUrl);
 
+            Groups   = new ZoomGroupsClient(Options, WebClient);
             Meetings = new ZoomMeetingsClient(Options, WebClient);
-            Reports = new ZoomReportsClient(Options, WebClient);
-            Users = new ZoomUsersClient(Options, WebClient);
+            Reports  = new ZoomReportsClient(Options, WebClient);
+            Users    = new ZoomUsersClient(Options, WebClient);
             Webhooks = new ZoomWebhookClient(Options, WebClient);
         }
 

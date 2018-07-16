@@ -126,6 +126,84 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
 
         #endregion
 
+        #region Group Tests
+
+        [Test]
+        public void Load_Groups_Returns_List()
+        {
+            // Arrange
+            var group = _sut.Groups.CreateGroup(new Models.Groups.CreateGroup
+            {
+                Name = $"Test Group {DateTimeOffset.Now.ToUnixTimeMilliseconds()}"
+            });
+            group.Id.ShouldNotBeNullOrWhiteSpace();
+
+            // Act
+            var result = _sut.Groups.GetGroups();
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Groups.ShouldNotBeNull();
+            result.Groups.Count.ShouldBeGreaterThan(0);
+
+            // Cleanup
+            _sut.Groups.DeleteGroup(group.Id);
+        }
+
+        [Test]
+        public void Get_Group_Returns_Valid_Group()
+        {
+            // Arrange
+            var group = _sut.Groups.CreateGroup(new Models.Groups.CreateGroup
+            {
+                Name = $"Test Group {DateTimeOffset.Now.ToUnixTimeMilliseconds()}"
+            });
+            group.Id.ShouldNotBeNullOrWhiteSpace();
+
+            // Act
+            var result = _sut.Groups.GetGroup(group.Id);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Id.ShouldNotBeNull();
+            result.Name.ShouldNotBeNullOrWhiteSpace();
+
+            // Cleanup
+            _sut.Groups.DeleteGroup(group.Id);
+        }
+
+        [Test]
+        public void Get_Group_Members_Returns_List()
+        {
+            // Arrange
+            var group = _sut.Groups.CreateGroup(new Models.Groups.CreateGroup
+            {
+                Name = $"Test Group {DateTimeOffset.Now.ToUnixTimeMilliseconds()}"
+            });
+            group.Id.ShouldNotBeNullOrWhiteSpace();
+            GetUser();
+            _sut.Groups.AddGroupMembers(group.Id, new List<Models.Groups.CreateMember>
+            {
+                new Models.Groups.CreateMember
+                {
+                    Email = _userEmail
+                }
+            });
+
+            // Act
+            var result = _sut.Groups.GetGroupMembers(group.Id);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.TotalRecords.ShouldBeGreaterThan(0);
+            result.Members.ShouldNotBeNull();
+            result.Members.FirstOrDefault().Email.ShouldBe(_userEmail);
+
+            // Cleanup
+            _sut.Groups.DeleteGroup(group.Id);
+        }
+
+        #endregion
 
         #region User Tests
 

@@ -3,6 +3,11 @@
     public interface IZoomClient
     {
         /// <summary>
+        /// Groups Client
+        /// </summary>
+        IZoomGroupsClient Groups { get; }
+
+        /// <summary>
         /// Meetings Client
         /// </summary>
         IZoomMeetingsClient Meetings { get; }
