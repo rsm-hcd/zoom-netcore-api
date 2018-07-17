@@ -5,14 +5,14 @@
     <AssemblyName>AndcultureCode.ZoomClient</AssemblyName>
     <RootNamespace>AndcultureCode.ZoomClient</RootNamespace>
     <PackageId>AndcultureCode.Zoom.NetCore.Api</PackageId>
-    <PackageVersion>1.0.10</PackageVersion>
+    <PackageVersion>1.0.11</PackageVersion>
     <Authors>AndcultureCode</Authors>
     <Description>.NET Core Api Wrapper around Zoom's Api</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Add support for groups.</PackageReleaseNotes>
+    <PackageReleaseNotes>Add additional parameters to user delete method to support transferring data to new user</PackageReleaseNotes>
     <Copyright>Copyright 2018 (c) Andculture</Copyright>
     <PackageTags>Zoom NetCore</PackageTags>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
   </PropertyGroup>
 
   <ItemGroup>

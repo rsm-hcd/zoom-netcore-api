@@ -193,7 +193,7 @@ namespace AndcultureCode.ZoomClient
             return false;
         }
 
-        public bool DeleteUser(string userId, string action = "disassociate")
+        public bool DeleteUser(string userId, string action = "disassociate", string transferEmail = null, bool transferMeeting = false, bool transferWebinar = false, bool transferRecording = false)
         {
             if (!action.Equals(DeleteUserAction.Disassociate, StringComparison.InvariantCultureIgnoreCase) &&
                 !action.Equals(DeleteUserAction.Delete, StringComparison.InvariantCultureIgnoreCase))
@@ -203,6 +203,14 @@ namespace AndcultureCode.ZoomClient
 
             var request = BuildRequestAuthorization(DELETE_USER, Method.DELETE);
             request.AddParameter("userId", userId, ParameterType.UrlSegment);
+
+            if (!string.IsNullOrWhiteSpace(transferEmail))
+            {
+                request.AddParameter("transfer_email", transferEmail, ParameterType.QueryString);
+                request.AddParameter("transfer_meeting", transferMeeting, ParameterType.QueryString);
+                request.AddParameter("transfer_webinar", transferWebinar, ParameterType.QueryString);
+                request.AddParameter("transfer_recording", transferRecording, ParameterType.QueryString);
+            }
 
             var response = WebClient.Execute(request);
 
