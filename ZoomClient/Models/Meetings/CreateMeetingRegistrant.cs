@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AndcultureCode.ZoomClient.Models.Meetings
 {
-    public class CreateMeetingRegistrant : Meeting, ICreatable
+    public class CreateMeetingRegistrant : MeetingRegistrant, ICreatable
     {
         #region ICreatable Implementation
 
