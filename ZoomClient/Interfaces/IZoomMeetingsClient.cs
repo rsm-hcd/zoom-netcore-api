@@ -81,6 +81,6 @@ namespace AndcultureCode.ZoomClient.Interfaces
         /// <param name="status"></param>
         /// <param name="occurrenceId"></param>
         /// <returns></returns>
-        bool UpdateMeetingRegistrant(string meetingId, List<MeetingRegistrant> registrants, string status, string occurrenceId = null);
+        bool UpdateMeetingRegistrant(string meetingId, List<UpdateMeetingRegistrant> registrants, string status, string occurrenceId = null);
     }
 }

@@ -23,6 +23,7 @@ namespace AndcultureCode.ZoomClient
 
         const string POST_MEETING = "users/{userId}/meetings";
         const string POST_MEETING_REGISTRANTS = "meetings/{meetingId}/registrants";
+        const string POST_MEETING_REGISTRANTS_STATUS = "meetings/{meetingId}/registrants/status";
 
         const string PUT_MEETING = "meetings/{meetingId}/status";
         const string PUT_MEETING_REGISTRANTS = "meetings/{meetingId}/registrants";
@@ -287,16 +288,16 @@ namespace AndcultureCode.ZoomClient
             return null;
         }
 
-        public bool UpdateMeetingRegistrant(string meetingId, List<MeetingRegistrant> registrants, string status, string occurrenceId = null)
+        public bool UpdateMeetingRegistrant(string meetingId, List<UpdateMeetingRegistrant> registrants, string status, string occurrenceId = null)
         {
-            if (!status.Equals(MeetingRegistrantStatuses.Approved, StringComparison.InvariantCultureIgnoreCase) &&
-                !status.Equals(MeetingRegistrantStatuses.Denied, StringComparison.InvariantCultureIgnoreCase) &&
-                !status.Equals(MeetingRegistrantStatuses.Pending, StringComparison.InvariantCultureIgnoreCase))
+            if (!status.Equals(UpdateMeetingRegistrantStatuses.Approve, StringComparison.InvariantCultureIgnoreCase) &&
+                !status.Equals(UpdateMeetingRegistrantStatuses.Deny, StringComparison.InvariantCultureIgnoreCase) &&
+                !status.Equals(UpdateMeetingRegistrantStatuses.Cancel, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new Exception($"UpdateMeetingRegistrant status allowed values are [{MeetingRegistrantStatuses.Approved},{MeetingRegistrantStatuses.Denied},{MeetingRegistrantStatuses.Pending}]");
+                throw new Exception($"UpdateMeetingRegistrant status allowed values are [{UpdateMeetingRegistrantStatuses.Approve},{UpdateMeetingRegistrantStatuses.Deny},{UpdateMeetingRegistrantStatuses.Cancel}]");
             }
 
-            var request = BuildRequestAuthorization(POST_MEETING_REGISTRANTS, Method.POST);
+            var request = BuildRequestAuthorization(POST_MEETING_REGISTRANTS_STATUS, Method.PUT);
             request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
             if (!string.IsNullOrWhiteSpace(occurrenceId))
             {

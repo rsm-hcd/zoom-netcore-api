@@ -72,6 +72,27 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         }
 
         [Test]
+        public void Create_Meeting_Registrants_Returns_Registrant()
+        {
+            // Arrange
+            GetUser();
+            GenerateMeeting();
+            _meeting = _sut.Meetings.CreateMeeting(_userEmail, _meeting);
+
+            // Act
+            var result = _sut.Meetings.CreateMeetingRegistrant(_meeting.Id, new CreateMeetingRegistrant
+            {
+                Email     = $"test{DateTimeOffset.Now.ToUnixTimeMilliseconds()}@gmail.com",
+                FirstName = "FirstName",
+                LastName  = "LastName"
+            });
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.JoinUrl.ShouldNotBeNullOrWhiteSpace();
+        }
+
+        [Test]
         public void Delete_Meeting_Returns_Success()
         {
             // Arrange
@@ -217,6 +238,28 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
 
             // Cleanup
             _sut.Groups.DeleteGroup(group.Id);
+        }
+
+        [Test]
+        public void Update_Meeting_Registrants_Returns_Success()
+        {
+            // Arrange
+            GetUser();
+            GenerateMeeting();
+            _meeting = _sut.Meetings.CreateMeeting(_userEmail, _meeting);
+            var registrant = _sut.Meetings.CreateMeetingRegistrant(_meeting.Id, new CreateMeetingRegistrant
+            {
+                Email = $"test{DateTimeOffset.Now.ToUnixTimeMilliseconds()}@gmail.com",
+                FirstName = "FirstName",
+                LastName = "LastName"
+            });
+
+            // Act
+            var result = _sut.Meetings.UpdateMeetingRegistrant(_meeting.Id, new List<UpdateMeetingRegistrant> { new UpdateMeetingRegistrant { Email = registrant.Email } }, UpdateMeetingRegistrantStatuses.Approve);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.ShouldBe(true);
         }
 
         #endregion
