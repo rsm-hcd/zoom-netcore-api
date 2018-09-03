@@ -108,6 +108,22 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         }
 
         [Test]
+        public void Get_Meeting_Registrants_Returns_List()
+        {
+            // Arrange
+            GetUser();
+            GenerateMeeting();
+            _meeting = _sut.Meetings.CreateMeeting(_userEmail, _meeting);
+
+            // Act
+            var result = _sut.Meetings.GetMeetingRegistrants(_meeting.Id);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Registrants.ShouldNotBeNull();
+        }
+
+        [Test]
         public void Update_Meeting_Returns_Success()
         {
             // Arrange

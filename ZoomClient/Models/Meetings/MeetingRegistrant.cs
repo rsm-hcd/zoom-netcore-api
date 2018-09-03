@@ -101,7 +101,12 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
         /// <summary>
         /// Zoom property: create_time
         /// </summary>
-        public DateTimeOffset CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
+
+        /// <summary>
+        /// Zoom property: join_url
+        /// </summary>
+        public string JoinUrl { get; set; }
 
         /// <summary>
         /// Zoom property: custom_questions
