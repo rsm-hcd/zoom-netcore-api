@@ -287,7 +287,7 @@ namespace AndcultureCode.ZoomClient
             return null;
         }
 
-        public bool UpdateMeetingRegistrant(string meetingId, List<MeetingRegistrantUpdate> registrants, string status, string occurrenceId = null)
+        public bool UpdateMeetingRegistrant(string meetingId, List<MeetingRegistrant> registrants, string status, string occurrenceId = null)
         {
             if (!status.Equals(MeetingRegistrantStatuses.Approved, StringComparison.InvariantCultureIgnoreCase) &&
                 !status.Equals(MeetingRegistrantStatuses.Denied, StringComparison.InvariantCultureIgnoreCase) &&
