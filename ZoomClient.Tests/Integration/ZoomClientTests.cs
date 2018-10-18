@@ -393,6 +393,28 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             });
         }
 
+        [Test]
+        public void Update_User_Email_Returns_Success()
+        {
+            // Arrange
+            GetUser();
+            var user = _sut.Users.GetUser(_userEmail);
+            var originalEmail = _userEmail;
+            var newEmail = $"testuser{DateTimeOffset.Now.ToUnixTimeMilliseconds()}@gmail.com";
+
+            // Act
+            var result = _sut.Users.UpdateUserEmail(originalEmail, newEmail);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.ShouldBe(true);
+            user = _sut.Users.GetUser(newEmail);
+            user.Email.ShouldBe(newEmail);
+
+            // Cleanup
+            _sut.Users.UpdateUserEmail(newEmail, originalEmail);
+        }
+
         #endregion
 
         #region Report Tests

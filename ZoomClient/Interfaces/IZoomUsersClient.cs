@@ -47,5 +47,13 @@ namespace AndcultureCode.ZoomClient.Interfaces
         /// <param name="transferRecording"></param>
         /// <returns></returns>
         bool DeleteUser(string userId, string action = "disassociate", string transferEmail = null, bool transferMeeting = false, bool transferWebinar = false, bool transferRecording = false);
+
+        /// <summary>
+        /// Update a user's email to a new address
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="newEmail"></param>
+        /// <returns></returns>
+        bool UpdateUserEmail(string userId, string newEmail);
     }
 }

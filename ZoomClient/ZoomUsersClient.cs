@@ -21,6 +21,8 @@ namespace AndcultureCode.ZoomClient
 
         const string POST_CREATE_USER = "users";
 
+        const string PUT_UPDATE_USER_EMAIL = "users/{userId}/email";
+
         #endregion
 
         #region Properties
@@ -211,6 +213,36 @@ namespace AndcultureCode.ZoomClient
                 request.AddParameter("transfer_webinar", transferWebinar, ParameterType.QueryString);
                 request.AddParameter("transfer_recording", transferRecording, ParameterType.QueryString);
             }
+
+            var response = WebClient.Execute(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.NoContent)
+            {
+                return true;
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return false;
+        }
+
+        public bool UpdateUserEmail(string userId, string newEmail)
+        {
+            var user = new UpdateUserEmail
+            {
+                Email = newEmail
+            };
+            var request = BuildRequestAuthorization(PUT_UPDATE_USER_EMAIL, Method.PUT);
+            request.AddParameter("userId", userId, ParameterType.UrlSegment);
+            request.AddJsonBody(user);
 
             var response = WebClient.Execute(request);
 
