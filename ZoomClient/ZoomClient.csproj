@@ -5,14 +5,14 @@
     <AssemblyName>AndcultureCode.ZoomClient</AssemblyName>
     <RootNamespace>AndcultureCode.ZoomClient</RootNamespace>
     <PackageId>AndcultureCode.Zoom.NetCore.Api</PackageId>
-    <PackageVersion>1.0.16</PackageVersion>
+    <PackageVersion>1.0.17</PackageVersion>
     <Authors>AndcultureCode</Authors>
     <Description>.NET Core Api Wrapper around Zoom's Api</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Add User.UpdateUserEmail</PackageReleaseNotes>
+    <PackageReleaseNotes>Update MeetingEnd endpoint</PackageReleaseNotes>
     <Copyright>Copyright 2018 (c) Andculture</Copyright>
     <PackageTags>Zoom NetCore</PackageTags>
-    <Version>1.0.15</Version>
+    <Version>1.0.17</Version>
   </PropertyGroup>
 
   <ItemGroup>
