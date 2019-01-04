@@ -190,11 +190,11 @@ namespace AndcultureCode.ZoomClient
 
         public bool EndMeeting(string meetingId)
         {
-            var request = BuildRequestAuthorization(PATCH_MEETING, Method.PATCH);
+            var request = BuildRequestAuthorization(PUT_MEETING, Method.PUT);
             request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
+            request.AddJsonBody(new { action = "end" });
 
             var response = WebClient.Execute(request);
-            request.AddJsonBody(new { action = "end" });
 
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
