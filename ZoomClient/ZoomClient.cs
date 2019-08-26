@@ -1,6 +1,7 @@
 ﻿using AndcultureCode.ZoomClient.Interfaces;
 using AndcultureCode.ZoomClient.Models;
 using RestSharp;
+using RestSharp.Serializers;
 using System;
 
 namespace AndcultureCode.ZoomClient
@@ -52,6 +53,13 @@ namespace AndcultureCode.ZoomClient
             }
 
             WebClient = new RestClient(options.ZoomApiBaseUrl);
+
+            // Override with Newtonsoft JSON Handler
+            WebClient.AddHandler("application/json", () => NewtonsoftJsonSerializer.Default);
+            WebClient.AddHandler("text/json", () => NewtonsoftJsonSerializer.Default);
+            WebClient.AddHandler("text/x-json", () => NewtonsoftJsonSerializer.Default);
+            WebClient.AddHandler("text/javascript", () => NewtonsoftJsonSerializer.Default);
+            WebClient.AddHandler("*+json", () => NewtonsoftJsonSerializer.Default);
 
             Groups   = new ZoomGroupsClient(Options, WebClient);
             Meetings = new ZoomMeetingsClient(Options, WebClient);

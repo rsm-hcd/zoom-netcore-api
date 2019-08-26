@@ -20,6 +20,7 @@
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using RestSharp.Deserializers;
 
 namespace RestSharp.Serializers
 {
@@ -27,7 +28,7 @@ namespace RestSharp.Serializers
     /// Default JSON serializer for request bodies
     /// Doesn't currently use the SerializeAs attribute, defers to Newtonsoft's attributes
     /// </summary>
-    public class NewtonsoftJsonSerializer : ISerializer
+    public class NewtonsoftJsonSerializer : ISerializer, IDeserializer
     {
         private readonly Newtonsoft.Json.JsonSerializer _serializer;
 
@@ -77,6 +78,27 @@ namespace RestSharp.Serializers
                     var result = stringWriter.ToString();
                     return result;
                 }
+            }
+        }
+
+        public T Deserialize<T>(IRestResponse response)
+        {
+            var content = response.Content;
+
+            using (var stringReader = new StringReader(content))
+            {
+                using (var jsonTextReader = new JsonTextReader(stringReader))
+                {
+                    return _serializer.Deserialize<T>(jsonTextReader);
+                }
+            }
+        }
+
+        public static NewtonsoftJsonSerializer Default
+        {
+            get
+            {
+                return new NewtonsoftJsonSerializer();
             }
         }
 
