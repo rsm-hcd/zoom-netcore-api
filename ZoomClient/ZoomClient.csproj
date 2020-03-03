@@ -5,14 +5,15 @@
     <AssemblyName>AndcultureCode.ZoomClient</AssemblyName>
     <RootNamespace>AndcultureCode.ZoomClient</RootNamespace>
     <PackageId>AndcultureCode.Zoom.NetCore.Api</PackageId>
-    <PackageVersion>1.0.19</PackageVersion>
+    <PackageVersion>1.0.21</PackageVersion>
     <Authors>AndcultureCode</Authors>
     <Description>.NET Core Api Wrapper around Zoom's Api</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Update MeetingEnd endpoint</PackageReleaseNotes>
+    <PackageReleaseNotes>Clients that do not receive valid responses from Zoom throw exceptions based on StatusCodes</PackageReleaseNotes>
     <Copyright>Copyright 2018 (c) Andculture</Copyright>
     <PackageTags>Zoom NetCore</PackageTags>
-    <Version>1.0.19</Version>
+	<RepositoryUrl>https://github.com/AndcultureCode/zoom-netcore-api</RepositoryUrl>
+    <Version>1.0.21</Version>
   </PropertyGroup>
 
   <ItemGroup>
