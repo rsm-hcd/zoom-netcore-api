@@ -82,5 +82,21 @@ namespace AndcultureCode.ZoomClient.Interfaces
         /// <param name="occurrenceId"></param>
         /// <returns></returns>
         bool UpdateMeetingRegistrant(string meetingId, List<UpdateMeetingRegistrant> registrants, string status, string occurrenceId = null);
+
+        /// <summary>
+        /// Get past meeting details. https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/pastmeetingdetails
+        /// </summary>
+        /// <param name="meetingId"></param>
+        /// <returns></returns>
+        PastMeeting GetPastMeetingDetails(string meetingId);
+
+        /// <summary>
+        /// Get past meeting participants. https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/pastmeetingparticipants
+        /// </summary>
+        /// <param name="meetingId"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageNumber"></param>
+        /// <returns></returns>
+        ListPastMeetingParticipants GetPastMeetingParticipants(string meetingId, int pageSize = 30, int pageNumber = 1);
     }
 }

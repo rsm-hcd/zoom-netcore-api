@@ -17,6 +17,8 @@ namespace AndcultureCode.ZoomClient
         const string GET_MEETING = "meetings/{meetingId}";
         const string GET_LIST_MEETINGS = "users/{userId}/meetings";
         const string GET_MEETING_REGISTRANTS = "meetings/{meetingId}/registrants";
+        const string GET_PAST_MEETING = "past_meetings/{meetingId}";
+        const string GET_PAST_MEETING_PARTICIPANTS = "past_meetings/{meetingId}/participants";
 
         const string PATCH_MEETING = "meetings/{meetingId}";
         const string PATCH_MEETING_REGISTRANTS = "meetings/{meetingId}/registrants";
@@ -323,6 +325,58 @@ namespace AndcultureCode.ZoomClient
             }
 
             return false;
+        }
+
+        public PastMeeting GetPastMeetingDetails(string meetingId)
+        {
+            var request = BuildRequestAuthorization(GET_PAST_MEETING, Method.GET);
+            request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
+
+            var response = WebClient.Execute<PastMeeting>(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return response.Data;
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
+        }
+
+        public ListPastMeetingParticipants GetPastMeetingParticipants(string meetingId, int pageSize = 30, int pageNumber = 1)
+        {
+            var request = BuildRequestAuthorization(GET_PAST_MEETING_PARTICIPANTS, Method.GET);
+            request.AddParameter("meetingId", meetingId, ParameterType.UrlSegment);
+            request.AddParameter("page_size", pageSize, ParameterType.QueryString);
+            request.AddParameter("page_number", pageNumber, ParameterType.QueryString);
+
+            var response = WebClient.Execute<ListPastMeetingParticipants>(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return response.Data;
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            return null;
         }
 
         #endregion
