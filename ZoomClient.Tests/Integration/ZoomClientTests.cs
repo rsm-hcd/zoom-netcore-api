@@ -21,6 +21,8 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         string      _userEmail;
         Webhook     _webhook;
 
+        private const string MISSING_MEETING_ERROR_STRING = "\"code\":3001";
+
         #endregion
 
         #region Setup and Teardown
@@ -112,6 +114,20 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         }
 
         [Test]
+        public void Delete_Invalid_Meeting_Throws_Exception()
+        {
+            // Arrange
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => _sut.Meetings.DeleteMeeting("99999999"));
+
+            // Assert
+            exception.ShouldNotBeNull("Exception");
+            exception.Message.ShouldNotBeNull("Message");
+            exception.Message.ShouldContain(MISSING_MEETING_ERROR_STRING);
+        }
+
+        [Test]
         public void Get_Meeting_Returns_Meeting()
         {
             // Arrange
@@ -126,6 +142,20 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             result.ShouldNotBeNull();
             result.Uuid.ShouldNotBeNullOrWhiteSpace();
             result.JoinUrl.ShouldNotBeNullOrWhiteSpace();
+        }
+
+        [Test]
+        public void Get_Invalid_Meeting_Throws_Exception()
+        {
+            // Arrange
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => _sut.Meetings.GetMeeting("999999999"));
+
+            // Assert
+            exception.ShouldNotBeNull("Exception");
+            exception.Message.ShouldNotBeNull("Message");
+            exception.Message.ShouldContain(MISSING_MEETING_ERROR_STRING);
         }
 
         [Test]
@@ -145,6 +175,20 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         }
 
         [Test]
+        public void Get_Invalid_Meeting_Registrants_Throws_Exception()
+        {
+            // Arrange
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => _sut.Meetings.GetMeetingRegistrants("99999999"));
+
+            // Assert
+            exception.ShouldNotBeNull("Exception");
+            exception.Message.ShouldNotBeNull("Message");
+            exception.Message.ShouldContain(MISSING_MEETING_ERROR_STRING);
+        }
+
+        [Test]
         public void Update_Meeting_Returns_Success()
         {
             // Arrange
@@ -159,6 +203,21 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             // Assert
             result.ShouldNotBeNull();
             result.ShouldBe(true);
+        }
+
+        [Test]
+        public void Update_Invalid_Meeting_Throws_Exception()
+        {
+            // Arrange
+            GenerateMeeting();
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => _sut.Meetings.UpdateMeeting("99999999", _meeting));
+
+            // Assert
+            exception.ShouldNotBeNull("Exception");
+            exception.Message.ShouldNotBeNull("Message");
+            exception.Message.ShouldContain(MISSING_MEETING_ERROR_STRING);
         }
 
         #endregion
@@ -260,6 +319,25 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             // Assert
             result.ShouldNotBeNull();
             result.ShouldBe(true);
+        }
+
+        [Test]
+        public void Update_Invalid_Meeting_Registrants_Throws_Exception()
+        {
+            // Arrange
+
+            // Act
+            var exception = Assert.Throws<Exception>(() => _sut.Meetings.CreateMeetingRegistrant("99999999", new CreateMeetingRegistrant
+            {
+                Email = $"test{DateTimeOffset.Now.ToUnixTimeMilliseconds()}@gmail.com",
+                FirstName = "FirstName",
+                LastName = "LastName"
+            }));
+
+            // Assert
+            exception.ShouldNotBeNull("Exception");
+            exception.Message.ShouldNotBeNull("Message");
+            exception.Message.ShouldContain(MISSING_MEETING_ERROR_STRING);
         }
 
         #endregion

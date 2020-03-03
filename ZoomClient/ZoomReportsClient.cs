@@ -66,6 +66,11 @@ namespace AndcultureCode.ZoomClient
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
             }
 
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
+            }
+
             return null;
         }
 

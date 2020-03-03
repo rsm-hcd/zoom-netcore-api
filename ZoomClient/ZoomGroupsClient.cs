@@ -66,6 +66,11 @@ namespace AndcultureCode.ZoomClient
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
             }
 
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
+            }
+
             return null;
         }
 
@@ -91,6 +96,11 @@ namespace AndcultureCode.ZoomClient
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
             }
 
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
+            }
+
             return null;
         }
 
@@ -114,6 +124,11 @@ namespace AndcultureCode.ZoomClient
             if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
             {
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
             }
 
             return null;
@@ -142,6 +157,11 @@ namespace AndcultureCode.ZoomClient
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
             }
 
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
+            }
+
             return false;
         }
 
@@ -165,6 +185,11 @@ namespace AndcultureCode.ZoomClient
             if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
             {
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
             }
 
             return false;
@@ -194,6 +219,11 @@ namespace AndcultureCode.ZoomClient
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
             }
 
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
+            }
+
             return null;
         }
 
@@ -221,6 +251,11 @@ namespace AndcultureCode.ZoomClient
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
             }
 
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
+            }
+
             return false;
         }
 
@@ -245,6 +280,11 @@ namespace AndcultureCode.ZoomClient
             if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
             {
                 throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
             }
 
             return false;
