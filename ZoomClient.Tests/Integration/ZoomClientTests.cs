@@ -22,6 +22,7 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         Webhook     _webhook;
 
         private const string MISSING_MEETING_ERROR_STRING = "\"code\":3001";
+        private const string PASSWORD                     = "123456";
 
         #endregion
 
@@ -32,9 +33,9 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         {
             _sut = new ZoomClient(new ZoomClientOptions
             {
-                ZoomApiKey = "",
+                ZoomApiKey    = "",
                 ZoomApiSecret = ""
-            });
+			});
         }
 
         [TearDown]
@@ -58,7 +59,27 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
         #region Meeting Tests
 
         [Test]
-        public void Create_Meeting_Returns_Meeting()
+        public void Create_Meeting_With_Password_Returns_Meeting()
+        {
+            // Arrange
+            GetUser();
+            GenerateMeeting(PASSWORD);
+
+            // Act
+            _meeting = _sut.Meetings.CreateMeeting(_userEmail, _meeting);
+
+            // Assert
+            _meeting.ShouldNotBeNull();
+            _meeting.Uuid.ShouldNotBeNullOrWhiteSpace();
+            _meeting.Id.ShouldNotBeNullOrWhiteSpace();
+            _meeting.StartUrl.ShouldNotBeNullOrWhiteSpace();
+            _meeting.StartUrl.ShouldContain("zak=", "StartUrl=" + _meeting.StartUrl);
+            _meeting.JoinUrl.ShouldNotBeNullOrWhiteSpace();
+            _meeting.JoinUrl.ShouldContain("pwd=", "JoinUrl=" + _meeting.JoinUrl);
+        }
+
+        [Test]
+        public void Create_Meeting_Without_Password_Returns_Meeting()
         {
             // Arrange
             GetUser();
@@ -71,10 +92,36 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             _meeting.ShouldNotBeNull();
             _meeting.Uuid.ShouldNotBeNullOrWhiteSpace();
             _meeting.Id.ShouldNotBeNullOrWhiteSpace();
+            _meeting.StartUrl.ShouldNotBeNullOrWhiteSpace();
+            _meeting.StartUrl.ShouldContain("zak=", "StartUrl=" + _meeting.StartUrl);
+            _meeting.JoinUrl.ShouldNotBeNullOrWhiteSpace();
+            _meeting.JoinUrl.ShouldNotContain("pwd=", "JoinUrl=" + _meeting.JoinUrl);
         }
 
         [Test]
-        public void Create_Meeting_Registrants_Returns_Registrant()
+        public void Create_Meeting_Registrants_With_Password_Returns_Registrant()
+        {
+            // Arrange
+            GetUser();
+            GenerateMeeting(PASSWORD);
+            _meeting = _sut.Meetings.CreateMeeting(_userEmail, _meeting);
+
+            // Act
+            var result = _sut.Meetings.CreateMeetingRegistrant(_meeting.Id, new CreateMeetingRegistrant
+            {
+                Email     = $"test{DateTimeOffset.Now.ToUnixTimeMilliseconds()}@gmail.com",
+                FirstName = "FirstName",
+                LastName  = "LastName"
+            });
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.JoinUrl.ShouldNotBeNullOrWhiteSpace();
+            result.JoinUrl.ShouldContain("pwd=", "JoinUrl=" + _meeting.JoinUrl);
+        }
+
+        [Test]
+        public void Create_Meeting_Registrants_Without_Password_Returns_Registrant()
         {
             // Arrange
             GetUser();
@@ -92,6 +139,7 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             // Assert
             result.ShouldNotBeNull();
             result.JoinUrl.ShouldNotBeNullOrWhiteSpace();
+            result.JoinUrl.ShouldNotContain("pwd=", "JoinUrl=" + _meeting.JoinUrl);
         }
 
         [Test]
@@ -144,7 +192,22 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             result.JoinUrl.ShouldNotBeNullOrWhiteSpace();
         }
 
-        [Test]
+		[Test]
+		public void GetPastMeetingDetails_Returns_Meeting()
+		{
+			// Arrange
+			GetUser();
+
+			// Act
+			var result = _sut.Meetings.GetPastMeetingDetails("891627341");
+
+			// Assert
+			result.ShouldNotBeNull();
+			result.Uuid.ShouldNotBeNullOrWhiteSpace();
+			Console.Write($"Meeting ID: {result.Id}\nParticipants: {result.ParticipantsCount}\nType: {result.Type}\nStart: {result.StartTime}\nEnd: {result.EndTime}");
+		}
+
+		[Test]
         public void Get_Invalid_Meeting_Throws_Exception()
         {
             // Arrange
@@ -616,23 +679,24 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             _userEmail = _sut.Users.GetUsers().Users.FirstOrDefault().Email;
         }
 
-        void GenerateMeeting()
+        void GenerateMeeting(string password = null)
         {
             _meeting = new Meeting
             {
-                Topic = "Test Meeting " + DateTimeOffset.Now.ToUnixTimeMilliseconds(),
-                Type = MeetingTypes.Scheduled,
-                StartTime = DateTimeOffset.Now,
-                Duration = 60,
-                Settings = new MeetingSettings
+                Duration   = 60,
+                Password   = password,
+                Settings   = new MeetingSettings
                 {
-                    EnableHostVideo = true,
+                    EnableHostVideo        = true,
                     EnableParticipantVideo = true,
-                    EnableJoinBeforeHost = false,
-                    ApprovalType = MeetingApprovalTypes.Automatic,
-                    AutoRecording = MeetingAutoRecordingOptions.Cloud,
-                    EnableEnforceLogin = true
-                }
+                    EnableJoinBeforeHost   = false,
+                    ApprovalType           = MeetingApprovalTypes.Automatic,
+                    AutoRecording          = MeetingAutoRecordingOptions.Cloud,
+                    EnableEnforceLogin     = true
+                },
+                StartTime = DateTimeOffset.Now,
+                Topic     = "Test Meeting " + DateTimeOffset.Now.ToUnixTimeMilliseconds(),
+                Type      = MeetingTypes.Scheduled,
             };
         }
 
