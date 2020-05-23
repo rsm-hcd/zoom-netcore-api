@@ -3,6 +3,7 @@
     public enum MeetingListTypes
     {
         Scheduled,
-        Live
+        Live,
+        Upcoming
     }
 }
