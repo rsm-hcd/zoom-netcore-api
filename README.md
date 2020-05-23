@@ -24,6 +24,12 @@ foreach (var user in allUsers.Users) {
 }
 ```
 
+### API Key
+
+You must generate a JWT App (does not currently work with OAuth generated Apps).
+
+https://marketplace.zoom.us/docs/guides/build/jwt-app
+
 ## Interfaces
 
 ### IZoomClient
