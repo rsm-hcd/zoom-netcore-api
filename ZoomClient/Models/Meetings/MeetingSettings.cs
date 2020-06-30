@@ -29,6 +29,12 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
         public bool EnableIndiaHost { get; set; }
 
         /// <summary>
+        /// Zoom Property: waiting_room
+        /// </summary>
+        [JsonProperty("waiting_room")]
+        public bool EnableWaitingRoom { get; set; }
+
+        /// <summary>
         /// Zoom Property: join_before_host
         /// </summary>
         [JsonProperty("join_before_host")]
