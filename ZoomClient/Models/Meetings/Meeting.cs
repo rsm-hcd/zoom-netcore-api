@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace AndcultureCode.ZoomClient.Models.Meetings
 {
@@ -26,6 +27,7 @@ namespace AndcultureCode.ZoomClient.Models.Meetings
 
         /// <summary>
         /// Zoom Property: duration
+        /// <br/>Meeting duration (minutes). Used for scheduled meetings only.
         /// </summary>
         public int Duration { get; set; }
 
