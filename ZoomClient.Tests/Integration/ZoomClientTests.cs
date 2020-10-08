@@ -575,6 +575,23 @@ namespace AndcultureCode.ZoomClient.Tests.Integration
             result.Participants.Count.ShouldBeGreaterThan(0);
         }
 
+        [Test]
+        public void Get_User_Meeting_Report_Last_Month()
+        {
+            // Arrange
+            string user = _userEmail;
+            var from = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
+            var to = DateTime.Now.ToString("yyyy-MM-dd");
+
+            // Act
+            var result = _sut.Reports.GetMeetingReport(user, from, to);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Meetings.ShouldNotBeNull();
+            result.Meetings.Count.ShouldBeGreaterThan(0);
+        }
+
         #endregion
 
         #region Webhook Tests
