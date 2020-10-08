@@ -12,6 +12,7 @@ namespace AndcultureCode.ZoomClient
         #region Constants
 
         protected const string GET_MEETING_PARTICIPANTS = "report/meetings/{meetingId}/participants";
+        protected const string GET_MEETINGS = "report/users/{userId}/meetings";
 
         #endregion
 
@@ -50,6 +51,50 @@ namespace AndcultureCode.ZoomClient
             }
 
             var response = WebClient.Execute<MeetingParticipantsReport>(request);
+
+            if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return response.Data;
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.ErrorMessage))
+            {
+                throw new Exception(response.ErrorMessage);
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.StatusDescription) && !string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusDescription} || {response.Content}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(response.Content))
+            {
+                throw new Exception($"{response.StatusCode} || {response.Content}");
+            }
+
+            return null;
+        }
+
+        public MeetingReport GetMeetingReport(string userId, string from, string to, MeetingReportTypes type = MeetingReportTypes.Past, int pageSize = 30, string nextPageToken = null)
+        {
+            if (pageSize > 300)
+            {
+                throw new Exception("GetMeetingReport page size max 300");
+            }
+
+            var request = BuildRequestAuthorization(GET_MEETINGS, Method.GET);
+            request.AddParameter("userId", userId, ParameterType.UrlSegment);
+            request.AddParameter("from", from, ParameterType.QueryString);
+            request.AddParameter("to", to, ParameterType.QueryString);
+            request.AddParameter("type", type.ToString().ToLowerInvariant(), ParameterType.QueryString);
+
+            request.AddParameter("page_size", pageSize, ParameterType.QueryString);
+            if (!string.IsNullOrWhiteSpace(nextPageToken))
+            {
+                request.AddParameter("next_page_token", nextPageToken, ParameterType.QueryString);
+            }
+
+            var response = WebClient.Execute<MeetingReport>(request);
 
             if (response.ResponseStatus == ResponseStatus.Completed && response.StatusCode == System.Net.HttpStatusCode.OK)
             {
